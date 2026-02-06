@@ -1,0 +1,1546 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Für dich ❤️</title>
+  <style>
+    :root{
+      --bg1:#0b0b12;
+      --bg2:#121225;
+      --card: rgba(255,255,255,.07);
+      --card2: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --border: rgba(255,255,255,.12);
+      --shadow: 0 24px 70px rgba(0,0,0,.45);
+      --radius: 22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(255,126,170,.22), transparent 55%),
+        radial-gradient(900px 600px at 85% 25%, rgba(120,160,255,.18), transparent 60%),
+        radial-gradient(900px 700px at 40% 100%, rgba(255,210,120,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+    .wrap{max-width:980px;margin:0 auto;padding:22px}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 16px; border:1px solid var(--border); border-radius:999px;
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 55px rgba(0,0,0,.25);
+    }
+    .brand{display:flex; gap:10px; align-items:center; font-weight:700; letter-spacing:.2px;}
+    .badge{
+      font-size:12px; color:var(--muted);
+      border:1px solid var(--border); padding:6px 10px; border-radius:999px;
+      background: rgba(255,255,255,.04);
+    }
+    .hero{
+      margin-top:18px;
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(600px 220px at 20% 0%, rgba(255,126,170,.25), transparent 60%),
+        radial-gradient(480px 240px at 85% 15%, rgba(120,160,255,.20), transparent 60%);
+      filter: blur(14px);
+      opacity:.85;
+      pointer-events:none;
+    }
+    .hero-inner{position:relative; padding:22px 22px 16px}
+    h1{margin:0;font-size:28px}
+    .sub{margin:8px 0 0; color:var(--muted); line-height:1.5}
+    .grid{
+      display:grid; gap:14px; margin-top:16px;
+      grid-template-columns: 1.15fr .85fr;
+    }
+    @media (max-width: 860px){ .grid{grid-template-columns:1fr} }
+
+    .card{
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 55px rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+    .card-h{
+      padding:14px 16px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+    }
+    .card-h strong{font-size:14px}
+    .card-h span{font-size:12px;color:var(--muted)}
+    .card-b{padding:14px 16px}
+
+    .pillrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+
+    button{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:12px 14px;
+      border-radius: 16px;
+      cursor:pointer;
+      font-size:14px;
+      transition: transform .12s ease, background .18s ease, border-color .18s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button:hover{transform: translateY(-1px); background: rgba(255,255,255,.09)}
+    button:active{transform: translateY(0px) scale(.99)}
+    .primary{
+      background: linear-gradient(135deg, rgba(255,126,170,.45), rgba(120,160,255,.35));
+      border-color: rgba(255,255,255,.22);
+    }
+    .danger{border-color: rgba(255,120,120,.35); background: rgba(255,120,120,.10)}
+    .ghost{background: transparent}
+
+    .kv{display:grid; gap:10px; grid-template-columns: repeat(4, 1fr);}
+    @media (max-width: 560px){ .kv{grid-template-columns: repeat(2, 1fr);} }
+    .k{
+      padding:12px; border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      text-align:center;
+    }
+    .k .n{font-size:22px; font-weight:800}
+    .k .l{font-size:11px; color:var(--muted); margin-top:2px}
+
+    .panel{
+      margin-top:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.12);
+      border-radius: 18px;
+      overflow:hidden;
+    }
+    .panel .p-h{
+      padding:12px 14px; display:flex; align-items:center; justify-content:space-between;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      gap:10px;
+    }
+    .panel .p-b{padding:14px}
+
+    .content{
+      line-height:1.65;
+      font-size:15px;
+      color: rgba(255,255,255,.90);
+      white-space:pre-wrap;
+    }
+    .fadein{animation: fadein .35s ease-out}
+    @keyframes fadein { from{opacity:0; transform: translateY(6px)} to{opacity:1; transform: translateY(0)} }
+
+    .modal{
+      position:fixed; inset:0; display:none;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(8px);
+      padding:18px;
+      z-index:50;
+    }
+    .modal.on{display:flex; align-items:center; justify-content:center;}
+    .sheet{
+      width:min(880px, 100%);
+      border-radius: 26px;
+      border:1px solid rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      box-shadow: 0 28px 90px rgba(0,0,0,.55);
+      overflow:hidden;
+    }
+    .sheet-h{
+      padding:14px 16px; display:flex; align-items:center; justify-content:space-between;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .sheet-h strong{font-size:14px}
+    .sheet-b{padding:14px 16px}
+
+    label{display:block; font-size:12px; color:var(--muted); margin-top:10px}
+    input, textarea{
+      width:100%;
+      margin-top:8px;
+      padding:12px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.14);
+      color:var(--text);
+      outline:none;
+      font-size:14px;
+    }
+    textarea{min-height:98px; resize:vertical}
+    .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .spacer{height:10px}
+    .small{font-size:12px; color:var(--muted)}
+
+    .reasons{
+      max-height: 290px;
+      overflow:auto;
+      padding-right:6px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,.18) transparent;
+    }
+    .reasons::-webkit-scrollbar{ width: 10px; }
+    .reasons::-webkit-scrollbar-thumb{
+      background: rgba(255,255,255,.14);
+      border-radius: 999px;
+      border: 2px solid rgba(0,0,0,.20);
+    }
+    .reasons::-webkit-scrollbar-track{ background: transparent; }
+
+    .reason{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding:12px;
+      margin-bottom:10px;
+      display:flex; gap:10px; align-items:flex-start;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: linear-gradient(180deg, rgba(255,126,170,.85), rgba(120,160,255,.80));
+      margin-top:6px;
+      flex: 0 0 auto;
+    }
+
+    .toast{
+      position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
+      padding:12px 14px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(10,10,20,.75);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.45);
+      display:none;
+      z-index:60;
+      font-size:13px;
+      color: rgba(255,255,255,.88);
+    }
+    .toast.on{display:block; animation: toast .25s ease-out}
+    @keyframes toast { from{opacity:0; transform:translateX(-50%) translateY(8px)} to{opacity:1; transform:translateX(-50%) translateY(0)} }
+
+    .lockrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .pin{display:flex; gap:8px; align-items:center}
+    .pin input{width:180px}
+    .hint{font-size:12px; color:var(--muted)}
+
+    button:focus-visible, input:focus-visible, textarea:focus-visible{
+      outline: 2px solid rgba(255,255,255,.28);
+      outline-offset: 2px;
+      box-shadow: 0 0 0 6px rgba(255,126,170,.12);
+    }
+
+    /* TicTacToe */
+    .ttt{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      max-width:360px;
+      margin:0 auto;
+    }
+    .cell{
+      aspect-ratio: 1 / 1;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.12);
+      display:flex;align-items:center;justify-content:center;
+      font-size:38px;font-weight:900;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, background .18s ease;
+    }
+    .cell:hover{transform: translateY(-1px); background: rgba(255,255,255,.06)}
+    .cell:active{transform: translateY(0px) scale(.99)}
+
+    .selectTiny{
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.14);
+      color:rgba(255,255,255,.9);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">❤️ <span id="titleName">mein Schatz</span></div>
+      <div class="badge" id="badge">privat • nur für euch</div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-inner">
+        <h1>Eine kleine Welt nur für euch</h1>
+        <div class="sub" id="subtitle">
+          Tippe dich durch kleine Überraschungen — und öffne den Brief mit eurem Codewort.
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <div class="card-h">
+              <strong>Heute für dich</strong>
+              <span id="dateLine"></span>
+            </div>
+            <div class="card-b">
+              <div class="pillrow">
+                <button class="primary" id="btnReason">✨ Ein schöner Grund</button>
+                <button id="btnWish">🌙 Heute wünsche ich mir…</button>
+                <button id="btnSurprise">🎁 Überraschung</button>
+                <button id="btnGame">🎮 Herz-Duell</button>
+                <button id="btnTTT">❌⭕ Tic-Tac-Toe</button>
+
+                <!-- NEU -->
+                <button id="btnTruthDare">🧩 Wahrheit/Wunsch</button>
+                <button id="btnWhoAmI">🎭 Wer bin ich?</button>
+
+                <button id="btnOpenLetter">🔒 Brief öffnen</button>
+                <button class="ghost" id="btnCustomize">⚙️ Personalisieren</button>
+              </div>
+
+              <div class="panel" style="margin-top:14px">
+                <div class="p-h">
+                  <strong id="panelTitle">Willkommen ❤️</strong>
+                  <span id="panelMeta" class="small"></span>
+                </div>
+                <div class="p-b">
+                  <div class="content fadein" id="panelContent">
+                    Ich hab dir diese kleine App gebaut — nur um dir zu zeigen, wie wichtig du mir bist.
+                    Tippe oben auf einen Button. 💖
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel" style="margin-top:14px">
+                <div class="p-h">
+                  <strong>Countdown bis zu eurem Moment</strong>
+                  <span class="small" id="countdownLabel"></span>
+                </div>
+                <div class="p-b">
+                  <div class="kv">
+                    <div class="k"><div class="n" id="d">—</div><div class="l">Tage</div></div>
+                    <div class="k"><div class="n" id="h">—</div><div class="l">Stunden</div></div>
+                    <div class="k"><div class="n" id="m">—</div><div class="l">Minuten</div></div>
+                    <div class="k"><div class="n" id="s">—</div><div class="l">Sekunden</div></div>
+                  </div>
+                  <div class="spacer"></div>
+                  <div class="small">Tipp: Datum geht flexibel: 10.12.2026 19:30 oder 2026-12-10 oder 10/12/2026 …</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-h">
+              <strong>100 Gründe</strong>
+              <span class="small">sanft scrollen • zum Lächeln</span>
+            </div>
+            <div class="card-b">
+              <div class="reasons" id="reasonsList"></div>
+              <div class="row">
+                <button class="primary" id="btnAddReason">➕ Grund hinzufügen</button>
+                <button class="ghost" id="btnShuffle">🔁 Mischen</button>
+              </div>
+              <div class="small">Klick auf einen Grund, um ihn zu kopieren (für WhatsApp). 😉</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="small" style="margin-top:14px">
+          Gemacht mit Liebe — <span id="fromLine">Ich</span> ❤️
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Customize Modal -->
+  <div class="modal" id="modal">
+    <div class="sheet">
+      <div class="sheet-h">
+        <strong>Personalisieren</strong>
+        <button class="ghost" id="btnClose">✕</button>
+      </div>
+      <div class="sheet-b">
+        <div class="small">Alles bleibt auf diesem Gerät gespeichert.</div>
+
+        <label>Ihr Name</label>
+        <input id="inTo" placeholder="z.B. Sarah" />
+
+        <label>Dein Name</label>
+        <input id="inFrom" placeholder="z.B. Max" />
+
+        <label>Codewort / Datum (z.B. 14.02 oder „Sternchen“)</label>
+        <input id="inPin" placeholder="Nur ihr kennt es…" />
+
+        <label>Date-Moment (für Countdown) — flexibel (z.B. 10.12.2026 19:30 / 2026-12-10)</label>
+        <input id="inDate" placeholder="z.B. 10.12.2026 19:30" />
+
+        <label>Dein Liebesbrief</label>
+        <textarea id="inLetter" placeholder="Schreib hier deinen Brief…"></textarea>
+
+        <label>„Heute wünsche ich mir…“ Ideen (je Zeile eine)</label>
+        <textarea id="inWishes" placeholder="Eine kleine Nachricht von dir.&#10;Dass wir kurz telefonieren.&#10;Ein Foto von deinem Tag.&#10;…"></textarea>
+
+        <label>Gründe (je Zeile ein Grund) — Ziel: 30–100</label>
+        <textarea id="inReasons" placeholder="Dein Lächeln…&#10;Wie du mich anschaust…&#10;…"></textarea>
+
+        <div class="row">
+          <button class="primary" id="btnSave">Speichern</button>
+          <button class="danger" id="btnReset">Zurücksetzen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lock Modal -->
+  <div class="modal" id="lockModal">
+    <div class="sheet">
+      <div class="sheet-h">
+        <strong>🔒 Brief öffnen</strong>
+        <button class="ghost" id="btnLockClose">✕</button>
+      </div>
+      <div class="sheet-b">
+        <div class="small">Gib euer Codewort ein. (Tipp: Datum, Spitzname oder ein Wort nur von euch.)</div>
+        <div class="spacer"></div>
+        <div class="lockrow">
+          <div class="pin">
+            <input id="pinInput" placeholder="Codewort…" />
+          </div>
+          <button class="primary" id="btnUnlock">Öffnen</button>
+        </div>
+        <div class="hint" id="pinHint" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+<!-- Herz-Duell Modal -->
+  <div class="modal" id="gameModal">
+    <div class="sheet">
+      <div class="sheet-h">
+        <strong>🎮 Herz-Duell</strong>
+        <button class="ghost" id="btnGameClose">✕</button>
+      </div>
+      <div class="sheet-b">
+        <div class="small">
+          2-Spieler, abwechselnd. Einer erzeugt einen Code und schickt ihn dem anderen (WhatsApp).
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="row">
+          <button class="primary" id="btnNewGame">Neue Runde erzeugen</button>
+          <button class="ghost" id="btnJoinGame">Code eingeben</button>
+        </div>
+
+        <div class="panel" style="margin-top:12px">
+          <div class="p-h">
+            <strong id="gameTitle">Bereit?</strong>
+            <span class="small" id="gameMeta"></span>
+          </div>
+          <div class="p-b">
+            <div class="content" id="gameContent">Erzeuge eine Runde oder gib einen Code ein.</div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:12px">
+          <button class="primary" id="btnNextTask">Nächste Aufgabe</button>
+          <button id="btnPointA">Punkt Spieler A</button>
+          <button id="btnPointB">Punkt Spieler B</button>
+          <button class="ghost" id="btnResetGame">Spiel zurücksetzen</button>
+        </div>
+
+        <div class="small" style="margin-top:10px" id="scoreLine">A: 0 • B: 0 • Runde: 0/5</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TicTacToe Modal -->
+  <div class="modal" id="tttModal">
+    <div class="sheet">
+      <div class="sheet-h">
+        <strong>❌⭕ Tic-Tac-Toe</strong>
+        <button class="ghost" id="btnTTTClose">✕</button>
+      </div>
+
+      <div class="sheet-b">
+        <div class="small">
+          Spiele allein gegen den Computer oder zu zweit am selben Gerät.
+        </div>
+
+        <div class="panel" style="margin-top:12px">
+          <div class="p-h" style="flex-wrap:wrap; gap:8px">
+            <strong id="tttStatus">Am Zug: X</strong>
+
+            <select id="tttMode" class="selectTiny">
+              <option value="pvp">2 Spieler</option>
+              <option value="cpu">Gegen Computer</option>
+            </select>
+
+            <select id="tttDiff" class="selectTiny">
+              <option value="easy">Leicht</option>
+              <option value="medium" selected>Mittel</option>
+              <option value="hard">Schwer</option>
+            </select>
+
+            <span class="small" id="tttMeta">Runde 1</span>
+          </div>
+
+          <div class="p-b">
+            <div class="ttt" id="tttBoard"></div>
+
+            <div class="row" style="margin-top:12px; justify-content:center">
+              <button class="primary" id="tttNew">Neue Runde</button>
+              <button class="ghost" id="tttReset">Spiel zurücksetzen</button>
+            </div>
+
+            <div class="small" style="margin-top:10px; text-align:center" id="tttScore">
+              X: 0 • O: 0 • Unentschieden: 0
+            </div>
+          </div>
+        </div>
+
+        <div class="small" style="margin-top:10px">
+          Tipp: Im Computer-Modus spielst du immer X.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEU: Wahrheit/Wunsch Modal -->
+  <div class="modal" id="truthModal">
+    <div class="sheet">
+      <div class="sheet-h">
+        <strong>🧩 Wahrheit / Wunsch</strong>
+        <button class="ghost" id="btnTruthClose">✕</button>
+      </div>
+
+      <div class="sheet-b">
+        <div class="small">
+          Zieh eine Karte. Wenn ihr <strong>nicht beantwortet</strong>, gibt es <strong>-1 Punkt</strong>.
+        </div>
+
+        <div class="panel" style="margin-top:12px">
+          <div class="p-h">
+            <strong id="truthTitle">Bereit?</strong>
+            <span class="small" id="truthMeta"></span>
+          </div>
+          <div class="p-b">
+            <div class="content" id="truthContent">Drück „Neue Karte“.</div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:12px">
+          <button class="primary" id="btnTruthNew">Neue Karte</button>
+          <button id="btnTruthAnswered">Beantwortet ✅ (+1)</button>
+          <button class="danger" id="btnTruthSkip">Nicht beantworten (-1)</button>
+          <button class="ghost" id="btnTruthReset">Zurücksetzen</button>
+        </div>
+
+        <div class="small" style="margin-top:10px" id="truthScoreLine">Punkte: 0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEU: Wer bin ich? Modal -->
+  <div class="modal" id="whoModal">
+    <div class="sheet">
+      <div class="sheet-h">
+        <strong>🎭 Wer bin ich?</strong>
+        <button class="ghost" id="btnWhoClose">✕</button>
+      </div>
+
+      <div class="sheet-b">
+        <div class="small">
+          Der Satz/Begriff ist pro Runde <strong>maximal 1× änderbar</strong>.
+        </div>
+
+        <div class="panel" style="margin-top:12px">
+          <div class="p-h" style="flex-wrap:wrap; gap:8px">
+            <strong id="whoTitle">Runde</strong>
+            <span class="small" id="whoMeta"></span>
+          </div>
+          <div class="p-b">
+            <div class="content" id="whoContent">Drück „Neue Runde“.</div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:12px">
+          <button class="primary" id="btnWhoNew">Neue Runde</button>
+          <button id="btnWhoReveal">Aufdecken 👀</button>
+          <button id="btnWhoEdit">Satz ändern (1×)</button>
+          <button class="ghost" id="btnWhoReset">Zurücksetzen</button>
+        </div>
+
+        <div class="small" style="margin-top:10px" id="whoHintLine">
+          Tipp: Fragt mit Ja/Nein (z.B. „Hat es mit Essen zu tun?“).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script>
+// --------------------
+    // App / Daten
+    // --------------------
+    const KEY = "romance_app_v2";
+    const GAME_KEY = "romance_app_game_v1";
+    const TTT_KEY  = "romance_app_ttt_v2";
+
+    const defaults = {
+      toName: "mein Schatz",
+      fromName: "Ich",
+      pin: "14.02",
+      dateMoment: "",
+      letter:
+`Mein Herz,
+
+ich wollte dir etwas sagen, das im Alltag manchmal zu kurz kommt:
+Danke, dass du da bist. Danke für dein Lächeln, deine Geduld, deine Stärke.
+Mit dir fühlt sich die Welt leiser und gleichzeitig heller an.
+
+Ich liebe dich — heute, morgen, immer.
+
+Dein`,
+      wishes: [
+        "Dass du kurz an mich denkst.",
+        "Eine kleine Nachricht von dir.",
+        "Ein Herz-Emoji ohne Grund.",
+        "Dass wir heute Abend kurz telefonieren.",
+        "Eine Sprachnachricht von dir.",
+        "Ein Foto von deinem Moment heute.",
+        "Dass du mir sagst, wie es dir geht.",
+        "Dass wir gleichzeitig aneinander denken.",
+        "Eine Gute-Nacht-Nachricht von dir."
+      ],
+      surprises: [
+        "Kuss-Gutschein: jederzeit einlösbar. 😘",
+        "Du bekommst heute 3 Komplimente (mindestens).",
+        "Heute Abend: wir machen es uns gemütlich. 🕯️",
+        "Du darfst dir was wünschen — ich sag nicht nein. 😉",
+        "Ich schreibe dir gleich eine Nachricht: „Ich liebe dich.“"
+      ],
+      reasons: [
+        "Weil dein Lächeln meinen Tag rettet.",
+        "Weil du mich verstehst, auch wenn ich wenig sage.",
+        "Weil mit dir selbst Alltag besonders wird.",
+        "Weil du so liebevoll bist.",
+        "Weil ich mich bei dir zuhause fühle.",
+        "Weil du mich besser machst."
+      ]
+    };
+
+    const $ = (id)=>document.getElementById(id);
+    const toast = $("toast");
+
+    // sichere Clone-Funktion (für ältere Browser)
+    const deepClone = (x)=>JSON.parse(JSON.stringify(x));
+
+    const state = loadApp();
+
+    // Initial UI
+    $("dateLine").textContent = new Date().toLocaleDateString("de-DE", { weekday:"long", year:"numeric", month:"long", day:"numeric" });
+    hydrateUI();
+    renderReasons();
+    startCountdown();
+
+    // Panel Buttons
+    $("btnReason").onclick = ()=>{
+      const r = pick(state.reasons);
+      setPanel("✨ Ein schöner Grund", "Nur für dich", `Ich liebe dich, weil…\n\n${r}`);
+      pulsePanel();
+    };
+    $("btnWish").onclick = ()=>{
+      const w = pick(state.wishes);
+      setPanel("🌙 Heute wünsche ich mir…", "Für Nähe trotz Abstand", w);
+      pulsePanel();
+    };
+    $("btnSurprise").onclick = ()=>{
+      const s = pick(state.surprises);
+      setPanel("🎁 Überraschung", "pssst…", s);
+      pulsePanel();
+    };
+
+    // Letter Lock
+    $("btnOpenLetter").onclick = ()=>{
+      $("pinInput").value="";
+      $("pinHint").textContent = state.pin ? `Hinweis: Es hat ${state.pin.length} Zeichen.` : "Hinweis: Setz ein Codewort in „Personalisieren“.";
+      openLock();
+    };
+    $("btnUnlock").onclick = tryUnlock;
+    $("pinInput").addEventListener("keydown", (e)=>{ if(e.key==="Enter") tryUnlock(); });
+
+    // Customize Modal
+    $("btnCustomize").onclick = openCustomize;
+    $("btnClose").onclick = closeCustomize;
+    $("modal").addEventListener("click", (e)=>{ if(e.target.id==="modal") closeCustomize(); });
+
+    $("btnLockClose").onclick = closeLock;
+    $("lockModal").addEventListener("click", (e)=>{ if(e.target.id==="lockModal") closeLock(); });
+
+    $("btnSave").onclick = ()=>{
+      state.toName = $("inTo").value.trim() || defaults.toName;
+      state.fromName = $("inFrom").value.trim() || defaults.fromName;
+      state.pin = $("inPin").value.trim() || defaults.pin;
+      state.dateMoment = $("inDate").value.trim();
+      state.letter = ($("inLetter").value.trim() || defaults.letter);
+      state.wishes = lines($("inWishes").value, defaults.wishes);
+      state.reasons = lines($("inReasons").value, defaults.reasons);
+
+      saveApp();
+      hydrateUI();
+      renderReasons();
+      closeCustomize();
+      showToast("Gespeichert ❤️");
+    };
+
+    $("btnReset").onclick = ()=>{
+      if(!confirm("Wirklich zurücksetzen?")) return;
+      localStorage.removeItem(KEY);
+      localStorage.removeItem(GAME_KEY);
+      localStorage.removeItem(TTT_KEY);
+      localStorage.removeItem(TRUTH_KEY);
+      localStorage.removeItem(WHO_KEY);
+      location.reload();
+    };
+
+    $("btnAddReason").onclick = ()=>{
+      const x = prompt("Schreib einen neuen Grund (z.B. „Wie du lachst…“)")?.trim();
+      if(!x) return;
+      state.reasons.unshift(x);
+      saveApp();
+      renderReasons();
+      showToast("Grund hinzugefügt ✅");
+    };
+
+    $("btnShuffle").onclick = ()=>{
+      state.reasons = shuffle([...state.reasons]);
+      saveApp();
+      renderReasons();
+      showToast("Gemischt 🔁");
+    };
+
+    // Helpers UI
+    function setPanel(title, meta, text){
+      $("panelTitle").textContent = title;
+      $("panelMeta").textContent = meta || "";
+      const el = $("panelContent");
+      el.classList.remove("fadein");
+      void el.offsetWidth;
+      el.textContent = text;
+      el.classList.add("fadein");
+    }
+
+    function pulsePanel(){
+      const panel = $("panelContent");
+      panel.animate(
+        [{transform:"scale(1)"},{transform:"scale(1.01)"},{transform:"scale(1)"}],
+        {duration:240, easing:"ease-out"}
+      );
+    }
+
+    function openCustomize(){
+      $("inTo").value = state.toName || "";
+      $("inFrom").value = state.fromName || "";
+      $("inPin").value = state.pin || "";
+      $("inDate").value = state.dateMoment || "";
+      $("inLetter").value = state.letter || "";
+      $("inWishes").value = (state.wishes||[]).join("\n");
+      $("inReasons").value = (state.reasons||[]).join("\n");
+      $("modal").classList.add("on");
+    }
+    function closeCustomize(){ $("modal").classList.remove("on"); }
+
+    function openLock(){ $("lockModal").classList.add("on"); setTimeout(()=>$("pinInput").focus(), 80); }
+    function closeLock(){ $("lockModal").classList.remove("on"); }
+
+    function tryUnlock(){
+      const given = $("pinInput").value.trim();
+      if(!state.pin){
+        setPanel("🔒 Brief", "Kein Codewort gesetzt", "Bitte in „Personalisieren“ ein Codewort eintragen.");
+        closeLock();
+        return;
+      }
+      if(given === state.pin){
+        const signed = `${state.letter}\n\n— ${state.fromName} ❤️`;
+        setPanel("💌 Dein Brief", "nur für dich", signed);
+        closeLock();
+        pulsePanel();
+        showToast("Brief geöffnet 💌");
+      }else{
+        showToast("Leider nicht. Versuch’s nochmal 🙂");
+        $("pinInput").focus();
+      }
+    }
+
+    function hydrateUI(){
+      $("titleName").textContent = state.toName || defaults.toName;
+      $("fromLine").textContent = state.fromName || defaults.fromName;
+      $("subtitle").textContent = "Tippe dich durch kleine Überraschungen — und öffne den Brief mit eurem Codewort.";
+      $("countdownLabel").textContent = state.dateMoment ? `Ziel: ${state.dateMoment}` : "Noch kein Date-Moment gesetzt";
+    }
+
+    function renderReasons(){
+      const list = $("reasonsList");
+      list.innerHTML = "";
+
+      const rs = (state.reasons && state.reasons.length) ? state.reasons : defaults.reasons;
+      const padded = rs.length >= 30 ? rs : rs.concat(makeFillers(30 - rs.length));
+
+      padded.slice(0,100).forEach((txt, idx)=>{
+        const item = document.createElement("div");
+        item.className = "reason";
+        item.innerHTML = `<div class="dot"></div><div><strong>#${idx+1}</strong><div class="small" style="margin-top:4px">${escapeHtml(txt)}</div></div>`;
+        item.onclick = async ()=>{
+          await copyToClipboard(txt);
+          showToast("Kopiert ✨");
+        };
+        list.appendChild(item);
+      });
+    }
+
+    function startCountdown(){
+      const tick = ()=>{
+        const target = parseDateTime(state.dateMoment);
+        if(!target){
+          $("d").textContent = "—"; $("h").textContent="—"; $("m").textContent="—"; $("s").textContent="—";
+          return;
+        }
+        const now = new Date();
+        let diff = target - now;
+        if(diff < 0) diff = 0;
+
+        const sec = Math.floor(diff/1000);
+        const days = Math.floor(sec / 86400);
+        const hrs  = Math.floor((sec % 86400) / 3600);
+        const mins = Math.floor((sec % 3600) / 60);
+        const s    = sec % 60;
+
+        $("d").textContent = String(days);
+        $("h").textContent = String(hrs).padStart(2,"0");
+        $("m").textContent = String(mins).padStart(2,"0");
+        $("s").textContent = String(s).padStart(2,"0");
+
+        if(diff === 0) $("countdownLabel").textContent = "Es ist soweit ❤️";
+      };
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    function parseDateTime(input){
+      if(!input) return null;
+      let s = String(input).trim();
+      if(!s) return null;
+
+      s = s.replace(/[./]/g, "-").replace(/\s+/g, " ");
+      let [datePart, timePart] = s.split(" ");
+
+      let hour = 0, minute = 0;
+      if(timePart){
+        const t = timePart.split(":");
+        hour = parseInt(t[0], 10) || 0;
+        minute = parseInt(t[1], 10) || 0;
+      }
+
+      const d = datePart.split("-").map(x => parseInt(x, 10));
+      if(d.length !== 3) return null;
+
+      let year, month, day;
+      if(d[0] > 31){ year = d[0]; month = d[1]; day = d[2]; }
+      else if(d[2] > 31){ day = d[0]; month = d[1]; year = d[2]; }
+      else{ day = d[0]; month = d[1]; year = d[2] < 100 ? 2000 + d[2] : d[2]; }
+
+      if(month < 1 || month > 12) return null;
+      if(day < 1 || day > 31) return null;
+
+      const dt = new Date(year, month - 1, day, hour, minute, 0);
+      return isNaN(dt.getTime()) ? null : dt;
+    }
+
+    function lines(text, fallbackArr){
+      const arr = String(text||"").split("\n").map(x=>x.trim()).filter(Boolean);
+      return arr.length ? arr : fallbackArr;
+    }
+
+    function makeFillers(n){
+      const fillers = [
+        "…weil du mich zum Lachen bringst.",
+        "…weil du so liebevoll bist.",
+        "…weil ich dir vertraue.",
+        "…weil du mein Lieblingsmensch bist.",
+        "…weil du mein Herz beruhigst."
+      ];
+      const out = [];
+      for(let i=0;i<n;i++) out.push(fillers[i % fillers.length]);
+      return out;
+    }
+
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add("on");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(()=>toast.classList.remove("on"), 1700);
+    }
+
+    async function copyToClipboard(text){
+      try{ await navigator.clipboard.writeText(text); }
+      catch{
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+      }
+    }
+
+    function pick(arr){
+      const a = (arr && arr.length) ? arr : [];
+      if(!a.length) return "";
+      return a[Math.floor(Math.random() * a.length)];
+    }
+
+    function shuffle(a){
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function loadApp(){
+      try{
+        const raw = localStorage.getItem(KEY);
+        if(!raw) return deepClone(defaults);
+        const p = JSON.parse(raw);
+        return { ...deepClone(defaults), ...p };
+      }catch{
+        return deepClone(defaults);
+      }
+    }
+    function saveApp(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+// --------------------
+    // Herz-Duell (Game)
+    // --------------------
+    const gameTasks = [
+      "Schick eine 10-Sekunden Sprachnachricht: „Ich vermisse dich.“",
+      "Schick ein Foto von deinem Moment gerade (egal wie unspektakulär).",
+      "Schreib 1 Sache, die du heute an mir liebst.",
+      "Sag in einer Sprachnachricht 3 Komplimente in 20 Sekunden.",
+      "Schick ein Herz + einen Grund in einem Satz.",
+      "Beende den Satz: „Wenn du jetzt hier wärst, dann…“ (süß!).",
+      "Wähle ein Lied, das dich an uns erinnert, und schick den Titel."
+    ];
+
+    const game = loadGame();
+
+    $("btnGame").onclick = ()=>{
+      $("gameModal").classList.add("on");
+      refreshGameUI(true);
+    };
+    $("btnGameClose").onclick = ()=> $("gameModal").classList.remove("on");
+    $("gameModal").addEventListener("click", (e)=>{ if(e.target.id==="gameModal") $("gameModal").classList.remove("on"); });
+
+    $("btnNewGame").onclick = ()=>{
+      game.code = String(Math.floor(1000 + Math.random()*9000));
+      game.seed = hashToSeed(game.code);
+      game.order = buildOrder(game.seed);
+      game.i = 0; game.a = 0; game.b = 0;
+      game.rounds = 5;
+      game.active = true;
+      saveGame();
+      refreshGameUI(true);
+      showToast("Code erzeugt ✅");
+    };
+
+    $("btnJoinGame").onclick = ()=>{
+      const c = prompt("Gib den 4-stelligen Code ein (z.B. 5831):")?.trim();
+      if(!c) return;
+      if(!/^\d{4}$/.test(c)){ showToast("Bitte 4 Ziffern 🙂"); return; }
+
+      game.code = c;
+      game.seed = hashToSeed(game.code);
+      game.order = buildOrder(game.seed);
+      game.i = 0; game.a = 0; game.b = 0;
+      game.rounds = 5;
+      game.active = true;
+      saveGame();
+      refreshGameUI(true);
+      showToast("Runde geladen ✅");
+    };
+
+    $("btnNextTask").onclick = ()=>{
+      if(!game.active) return showToast("Erst eine Runde starten 🙂");
+      if(game.i >= game.rounds) return finishGame();
+
+      const task = game.order[game.i];
+      $("gameTitle").textContent = "Aufgabe #" + (game.i + 1);
+      $("gameMeta").textContent = "Code: " + (game.code || "—");
+      $("gameContent").textContent = task;
+      game.i += 1;
+      saveGame();
+      refreshScore();
+    };
+
+    $("btnPointA").onclick = ()=>{ if(!game.active) return showToast("Starte erst eine Runde 🙂"); game.a += 1; saveGame(); refreshScore(); };
+    $("btnPointB").onclick = ()=>{ if(!game.active) return showToast("Starte erst eine Runde 🙂"); game.b += 1; saveGame(); refreshScore(); };
+
+    $("btnResetGame").onclick = ()=>{
+      if(!confirm("Spiel wirklich zurücksetzen?")) return;
+      localStorage.removeItem(GAME_KEY);
+      Object.assign(game, loadGame(true));
+      refreshGameUI(true);
+      showToast("Zurückgesetzt 🔄");
+    };
+
+    function refreshGameUI(clearTask=false){
+      $("gameMeta").textContent = game.code ? ("Code: " + game.code) : "Noch kein Code";
+      $("gameTitle").textContent = game.active ? "Bereit" : "Bereit?";
+      if(clearTask){
+        $("gameContent").textContent = game.code
+          ? `Schick den Code „${game.code}“ an die andere Person. Dann drückt ihr beide „Nächste Aufgabe“.`
+          : "Erzeuge eine Runde oder gib einen Code ein.";
+      }
+      refreshScore();
+    }
+
+    function refreshScore(){
+      const done = Math.min(game.i, game.rounds || 0);
+      $("scoreLine").textContent = `A: ${game.a} • B: ${game.b} • Runde: ${done}/${game.rounds || 5}`;
+      if(game.active && game.i >= game.rounds) finishGame();
+    }
+
+    function finishGame(){
+      game.active = false;
+      saveGame();
+      let msg = "";
+      if(game.a > game.b) msg = "Gewinner: Spieler A 🏆";
+      else if(game.b > game.a) msg = "Gewinner: Spieler B 🏆";
+      else msg = "Unentschieden 🤝 (Kuss/Umarmung fällig 😉)";
+      $("gameTitle").textContent = "Fertig!";
+      $("gameMeta").textContent = game.code ? ("Code: " + game.code) : "";
+      $("gameContent").textContent = msg + "\n\nTipp: Neue Runde erzeugen → neuen Code schicken.";
+      refreshScore();
+    }
+
+    function loadGame(reset=false){
+      if(reset) return { code:"", seed:0, order:[], i:0, a:0, b:0, rounds:5, active:false };
+      try{
+        const raw = localStorage.getItem(GAME_KEY);
+        if(!raw) return { code:"", seed:0, order:[], i:0, a:0, b:0, rounds:5, active:false };
+        const p = JSON.parse(raw);
+        return { code:"", seed:0, order:[], i:0, a:0, b:0, rounds:5, active:false, ...p };
+      }catch{
+        return { code:"", seed:0, order:[], i:0, a:0, b:0, rounds:5, active:false };
+      }
+    }
+    function saveGame(){ localStorage.setItem(GAME_KEY, JSON.stringify(game)); }
+
+    function hashToSeed(code){
+      let h = 2166136261;
+      for(const ch of String(code)){
+        h ^= ch.charCodeAt(0);
+        h = Math.imul(h, 16777619);
+      }
+      return (h >>> 0);
+    }
+
+    function buildOrder(seed){
+      const arr = [...gameTasks];
+      let s = seed || 1;
+      for(let i=arr.length-1;i>0;i--){
+        s = (Math.imul(1664525, s) + 1013904223) >>> 0;
+        const j = s % (i+1);
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    // --------------------
+    // TicTacToe (CPU + Schwierigkeit)
+    // --------------------
+    const ttt = loadTTT();
+    initTTTBoard();
+    bindTTTUI();
+    renderTTT();
+
+    $("btnTTT").onclick = ()=>{
+      $("tttModal").classList.add("on");
+      renderTTT();
+    };
+    $("btnTTTClose").onclick = ()=> $("tttModal").classList.remove("on");
+    $("tttModal").addEventListener("click", (e)=>{ if(e.target.id==="tttModal") $("tttModal").classList.remove("on"); });
+
+    $("tttNew").onclick = ()=>{
+      newRoundTTT();
+      saveTTT();
+      renderTTT();
+      showToast("Neue Runde ✅");
+    };
+
+    $("tttReset").onclick = ()=>{
+      if(!confirm("Tic-Tac-Toe wirklich komplett zurücksetzen?")) return;
+      localStorage.removeItem(TTT_KEY);
+      Object.assign(ttt, defaultTTT());
+      initTTTBoard();
+      bindTTTUI();
+      renderTTT();
+      showToast("Zurückgesetzt 🔄");
+    };
+
+    function defaultTTT(){
+      return {
+        board: Array(9).fill(""),
+        turn: "X",
+        winner: "",
+        round: 1,
+        scoreX: 0,
+        scoreO: 0,
+        scoreD: 0,
+        mode: "pvp",      // pvp | cpu
+        diff: "medium"    // easy | medium | hard
+      };
+    }
+
+    function loadTTT(){
+      try{
+        const raw = localStorage.getItem(TTT_KEY);
+        if(!raw) return defaultTTT();
+        const p = JSON.parse(raw);
+        return { ...defaultTTT(), ...p };
+      }catch{
+        return defaultTTT();
+      }
+    }
+
+    function saveTTT(){ localStorage.setItem(TTT_KEY, JSON.stringify(ttt)); }
+
+    function bindTTTUI(){
+      const modeEl = $("tttMode");
+      const diffEl = $("tttDiff");
+
+      modeEl.value = ttt.mode || "pvp";
+      diffEl.value = ttt.diff || "medium";
+
+      modeEl.onchange = ()=>{
+        ttt.mode = modeEl.value;
+        newRoundTTT();
+        saveTTT();
+        renderTTT();
+        showToast(ttt.mode === "cpu" ? "CPU aktiviert 🤖" : "2 Spieler 👥");
+      };
+
+      diffEl.onchange = ()=>{
+        ttt.diff = diffEl.value;
+        saveTTT();
+        renderTTT();
+        showToast(
+          ttt.diff === "easy" ? "Leicht 🎚️" :
+          ttt.diff === "hard" ? "Schwer 🎚️" : "Mittel 🎚️"
+        );
+      };
+    }
+
+    function initTTTBoard(){
+      const el = $("tttBoard");
+      el.innerHTML = "";
+      for(let i=0;i<9;i++){
+        const cell = document.createElement("div");
+        cell.className = "cell";
+        cell.onclick = ()=>{
+          if(ttt.mode === "cpu" && ttt.turn === "O") return;
+
+          if(!applyMoveTTT(i)) return;
+          saveTTT();
+          renderTTT();
+
+          if(ttt.mode === "cpu" && !ttt.winner && ttt.turn === "O"){
+            setTimeout(()=>{
+              const cpuIndex = pickCpuMoveByDifficulty(ttt.board);
+              if(cpuIndex === -1) return;
+              applyMoveTTT(cpuIndex);
+              saveTTT();
+              renderTTT();
+            }, 250);
+          }
+        };
+        el.appendChild(cell);
+      }
+    }
+
+    function applyMoveTTT(index){
+      if(ttt.winner) return false;
+      if(ttt.board[index]) return false;
+
+      ttt.board[index] = ttt.turn;
+
+      const w = calcWinnerTTT(ttt.board);
+      if(w){
+        ttt.winner = w;
+        if(w === "X") ttt.scoreX++;
+        else if(w === "O") ttt.scoreO++;
+        else ttt.scoreD++;
+      }else{
+        ttt.turn = (ttt.turn === "X") ? "O" : "X";
+      }
+      return true;
+    }
+
+    function newRoundTTT(){
+      ttt.board = Array(9).fill("");
+      ttt.turn = "X";
+      ttt.winner = "";
+      ttt.round += 1;
+    }
+
+    function calcWinnerTTT(b){
+      const lines = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
+      for(const [a,c,d] of lines){
+        if(b[a] && b[a] === b[c] && b[a] === b[d]) return b[a];
+      }
+      if(b.every(Boolean)) return "D";
+      return "";
+    }
+
+    function renderTTT(){
+      const cells = $("tttBoard").querySelectorAll(".cell");
+      cells.forEach((cell, idx)=> cell.textContent = ttt.board[idx] || "");
+
+      $("tttMode").value = ttt.mode || "pvp";
+      $("tttDiff").value = ttt.diff || "medium";
+
+      if(ttt.winner === "X") $("tttStatus").textContent = "X gewinnt 🏆";
+      else if(ttt.winner === "O") $("tttStatus").textContent = "O gewinnt 🏆";
+      else if(ttt.winner === "D") $("tttStatus").textContent = "Unentschieden 🤝";
+      else {
+        const extra = (ttt.mode === "cpu")
+          ? (ttt.turn === "X" ? " (Du)" : " (CPU…)") : "";
+        $("tttStatus").textContent = `Am Zug: ${ttt.turn}${extra}`;
+      }
+
+      $("tttMeta").textContent = `Runde ${ttt.round}`;
+      $("tttScore").textContent = `X: ${ttt.scoreX} • O: ${ttt.scoreO} • Unentschieden: ${ttt.scoreD}`;
+    }
+
+    // CPU Schwierigkeit
+    function pickCpuMoveByDifficulty(board){
+      const empty = [];
+      for(let i=0;i<9;i++) if(!board[i]) empty.push(i);
+      if(!empty.length) return -1;
+
+      const diff = ttt.diff || "medium";
+
+      if(diff === "easy"){
+        return empty[Math.floor(Math.random() * empty.length)];
+      }
+
+      if(diff === "medium"){
+        if(Math.random() < 0.45) return empty[Math.floor(Math.random() * empty.length)];
+        return bestMoveMinimax(board, "O");
+      }
+
+      return bestMoveMinimax(board, "O");
+    }
+
+    function bestMoveMinimax(board, ai){
+      const empty = [];
+      for(let i=0;i<9;i++) if(!board[i]) empty.push(i);
+      let bestScore = -Infinity;
+      let bestIdx = empty[0];
+
+      for(const i of empty){
+        const b = board.slice();
+        b[i] = ai;
+        const score = minimax(b, false, ai);
+        if(score > bestScore){
+          bestScore = score;
+          bestIdx = i;
+        }
+      }
+      return bestIdx;
+    }
+
+    function minimax(board, isMax, ai){
+      const human = (ai === "O") ? "X" : "O";
+      const res = calcWinnerTTT(board);
+      if(res === ai) return 10;
+      if(res === human) return -10;
+      if(res === "D") return 0;
+
+      const empty = [];
+      for(let i=0;i<9;i++) if(!board[i]) empty.push(i);
+
+      if(isMax){
+        let best = -Infinity;
+        for(const i of empty){
+          const b = board.slice();
+          b[i] = ai;
+          best = Math.max(best, minimax(b, false, ai));
+        }
+        return best;
+      }else{
+        let best = Infinity;
+        for(const i of empty){
+          const b = board.slice();
+          b[i] = human;
+          best = Math.min(best, minimax(b, true, ai));
+        }
+        return best;
+      }
+    }
+// --------------------
+    // NEU: Wahrheit/Wunsch (Skip = -1)
+    // --------------------
+    const TRUTH_KEY = "romance_app_truth_v1";
+
+    const truthDeck = {
+      truth: [
+        "Wann hast du dich zuletzt besonders geliebt von mir gefühlt?",
+        "Was ist eine kleine Sache, die ich mache und die dir viel bedeutet?",
+        "Was vermisst du gerade am meisten an uns?",
+        "Was war dein liebster Moment mit mir bisher?",
+        "Welche meiner Macken findest du heimlich süß?",
+        "Was beruhigt dich sofort, wenn du an mich denkst?",
+        "Was ist etwas, das du mir öfter sagen möchtest?",
+        "Wofür würdest du mir heute Danke sagen?"
+      ],
+      wish: [
+        "Schick mir ein ❤️ ohne Text.",
+        "Schreib mir einen Satz: „Ich mag an dir…“",
+        "Schick mir eine Sprachnachricht mit genau 5 Wörtern.",
+        "Schick mir ein Foto von deinem Moment gerade.",
+        "Beende den Satz: „Wenn du jetzt hier wärst, dann…“",
+        "Schick mir ein Emoji, das deine Stimmung beschreibt.",
+        "Sag mir eine Sache, auf die du dich mit mir freust."
+      ]
+    };
+
+    const truth = loadTruth();
+
+    $("btnTruthDare").onclick = ()=>{
+      $("truthModal").classList.add("on");
+      refreshTruthUI(true);
+    };
+    $("btnTruthClose").onclick = ()=> $("truthModal").classList.remove("on");
+    $("truthModal").addEventListener("click", (e)=>{ if(e.target.id==="truthModal") $("truthModal").classList.remove("on"); });
+
+    $("btnTruthNew").onclick = ()=>{
+      const type = Math.random() < 0.5 ? "truth" : "wish";
+      const card = pick(truthDeck[type]);
+      truth.lastType = type;
+      truth.lastCard = card;
+
+      $("truthTitle").textContent = (type === "truth") ? "Wahrheit" : "Wunsch";
+      $("truthMeta").textContent = "Karte ziehen";
+      $("truthContent").textContent = card;
+
+      saveTruth();
+      refreshTruthUI();
+      pulsePanelLike("truthContent");
+    };
+
+    $("btnTruthAnswered").onclick = ()=>{
+      if(!truth.lastCard) return showToast("Erst eine Karte ziehen 🙂");
+      truth.points += 1;
+      saveTruth();
+      refreshTruthUI();
+      showToast("+1 Punkt ✅");
+    };
+
+    $("btnTruthSkip").onclick = ()=>{
+      if(!truth.lastCard) return showToast("Erst eine Karte ziehen 🙂");
+      truth.points -= 1; // dein Wunsch: nicht beantworten = -1
+      saveTruth();
+      refreshTruthUI();
+      showToast("-1 Punkt 🙂");
+    };
+
+    $("btnTruthReset").onclick = ()=>{
+      if(!confirm("Wahrheit/Wunsch wirklich zurücksetzen?")) return;
+      localStorage.removeItem(TRUTH_KEY);
+      Object.assign(truth, defaultTruth());
+      refreshTruthUI(true);
+      showToast("Zurückgesetzt 🔄");
+    };
+
+    function defaultTruth(){
+      return { points: 0, lastType: "", lastCard: "" };
+    }
+    function loadTruth(){
+      try{
+        const raw = localStorage.getItem(TRUTH_KEY);
+        if(!raw) return defaultTruth();
+        return { ...defaultTruth(), ...JSON.parse(raw) };
+      }catch{
+        return defaultTruth();
+      }
+    }
+    function saveTruth(){ localStorage.setItem(TRUTH_KEY, JSON.stringify(truth)); }
+
+    function refreshTruthUI(clear=false){
+      $("truthScoreLine").textContent = `Punkte: ${truth.points}`;
+      if(clear){
+        $("truthTitle").textContent = "Bereit?";
+        $("truthMeta").textContent = "";
+        $("truthContent").textContent = "Drück „Neue Karte“.";
+      } else if(truth.lastCard){
+        $("truthTitle").textContent = (truth.lastType === "truth") ? "Wahrheit" : "Wunsch";
+        $("truthMeta").textContent = "Letzte Karte";
+        $("truthContent").textContent = truth.lastCard;
+      }
+    }
+
+    // kleine Animation wie dein Panel
+    function pulsePanelLike(id){
+      const el = $(id);
+      if(!el) return;
+      el.animate(
+        [{transform:"scale(1)"},{transform:"scale(1.01)"},{transform:"scale(1)"}],
+        {duration:240, easing:"ease-out"}
+      );
+    }
+
+    // --------------------
+    // NEU: Wer bin ich? (Satz nur 1× ändern)
+    // --------------------
+    const WHO_KEY = "romance_app_who_v1";
+
+    const whoPool = [
+      "Dein Lieblingsessen",
+      "Dein Lieblingssnack",
+      "Dein Lieblingsgetränk",
+      "Dein Lieblingsdessert",
+      "Dein Lieblingssong",
+      "Dein Lieblingsfilm",
+      "Deine Lieblingsserie",
+      "Dein Lieblingsort",
+      "Dein Wohlfühlort",
+      "Dein Traumreiseziel",
+      "Dein Lieblingsmoment am Tag",
+      "Dein perfekter Abend",
+      "Etwas, das dich immer aufheitert",
+      "Etwas, das dich beruhigt",
+      "Etwas, das du oft sagst",
+      "Etwas, das wir gern zusammen machen",
+      "Etwas, das wir oft schreiben",
+      "Ein Emoji, das dich beschreibt",
+      "Ein Emoji, das uns beschreibt",
+      "Ein Wort, das zu uns passt",
+      "Ein Insider-Wort von uns",
+      "Ein Spitzname",
+      "Dein Lieblingsgeruch",
+      "Dein Lieblingsfrühstück",
+      "Dein Lieblingswochentag"
+    ];
+
+    const who = loadWho();
+    refreshWhoUI(true);
+
+    $("btnWhoAmI").onclick = ()=>{
+      $("whoModal").classList.add("on");
+      refreshWhoUI(false);
+    };
+    $("btnWhoClose").onclick = ()=> $("whoModal").classList.remove("on");
+    $("whoModal").addEventListener("click", (e)=>{ if(e.target.id==="whoModal") $("whoModal").classList.remove("on"); });
+
+    $("btnWhoNew").onclick = ()=>{
+      who.round += 1;
+      who.term = pick(whoPool);
+      who.revealed = false;
+      who.editsUsed = 0; // pro Runde zurücksetzen
+      saveWho();
+      refreshWhoUI(false);
+      showToast("Neue Runde ✅");
+    };
+
+    $("btnWhoReveal").onclick = ()=>{
+      if(!who.term){
+        who.term = pick(whoPool);
+        who.round = Math.max(1, who.round);
+      }
+      who.revealed = true;
+      saveWho();
+      refreshWhoUI(false);
+      showToast("Aufgedeckt 👀");
+    };
+
+    $("btnWhoEdit").onclick = ()=>{
+      if(!who.term){
+        who.term = pick(whoPool);
+        who.round = Math.max(1, who.round);
+      }
+
+      if(who.editsUsed >= 1){
+        return showToast("Nur 1× pro Runde 🙂");
+      }
+
+      const newText = prompt("Neuer Satz/Begriff (1× pro Runde möglich):", who.term)?.trim();
+      if(!newText) return;
+
+      who.term = newText;
+      who.editsUsed = 1;
+      saveWho();
+      refreshWhoUI(false);
+      showToast("Geändert ✅");
+    };
+
+    $("btnWhoReset").onclick = ()=>{
+      if(!confirm("Wer bin ich? wirklich zurücksetzen?")) return;
+      localStorage.removeItem(WHO_KEY);
+      Object.assign(who, defaultWho());
+      refreshWhoUI(true);
+      showToast("Zurückgesetzt 🔄");
+    };
+
+    function defaultWho(){
+      return { round: 1, term: "", revealed: false, editsUsed: 0 };
+    }
+    function loadWho(){
+      try{
+        const raw = localStorage.getItem(WHO_KEY);
+        if(!raw) return defaultWho();
+        return { ...defaultWho(), ...JSON.parse(raw) };
+      }catch{
+        return defaultWho();
+      }
+    }
+    function saveWho(){ localStorage.setItem(WHO_KEY, JSON.stringify(who)); }
+
+    function refreshWhoUI(clear){
+      $("whoMeta").textContent = `Runde ${who.round} • Satz ändern: ${who.editsUsed}/1`;
+      if(clear || !who.term){
+        $("whoTitle").textContent = "Runde";
+        $("whoContent").textContent = "Drück „Neue Runde“.";
+        return;
+      }
+
+      $("whoTitle").textContent = "Wer bin ich?";
+      $("whoContent").textContent = who.revealed ? who.term : "🔒 (verdeckt) — Drück „Aufdecken“";
+    }
+
+  </script>
+</body>
+</html>
